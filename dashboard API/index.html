@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Two-Wheeler Insurance Market Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+        h1 {
+            text-align: center;
+        }
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .metric .label {
+            font-weight: bold;
+        }
+        .metric .value {
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Two-Wheeler Insurance Market Dashboard</h1>
+        <div class="metric">
+            <div class="label">Total Policies</div>
+            <div id="total-policies" class="value"></div>
+        </div>
+        <div class="metric">
+            <div class="label">Total Premium</div>
+            <div id="total-premium" class="value"></div>
+        </div>
+        <div class="metric">
+            <div class="label">Average Claim Amount</div>
+            <div id="avg-claim-amount" class="value"></div>
+        </div>
+
+        <script>
+            // Dummy data if API is not found (replace with real API or Google Sheet URL)
+            const apiUrl = "https://api.example.com/two-wheeler-insurance";
+            const dummyData = {
+                totalPolicies: 5000,
+                totalPremium: 2500000,
+                avgClaimAmount: 5000
+            };
+
+            // Function to fetch data from API or Google Sheet
+            async function fetchData() {
+                try {
+                    const response = await fetch(apiUrl);
+                    const data = await response.json();
+                    return data;
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+                    return dummyData; // Fallback to dummy data if API is not found
+                }
+            }
+
+            // Function to update the dashboard metrics with data
+            function updateMetrics(data) {
+                document.getElementById("total-policies").textContent = data.totalPolicies;
+                document.getElementById("total-premium").textContent = data.totalPremium;
+                document.getElementById("avg-claim-amount").textContent = data.avgClaimAmount;
+            }
+
+            // Fetch data and update metrics when the page loads
+            window.addEventListener("load", async () => {
+                const data = await fetchData();
+                updateMetrics(data);
+            });
+        </script>
+    </div>
+</body>
+</html>
